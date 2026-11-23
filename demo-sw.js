@@ -4,6 +4,7 @@ self.addEventListener('activate',event=>event.waitUntil(self.clients.claim()));
 self.addEventListener('fetch',event=>{
  const u=new URL(event.request.url);const scope=new URL(self.registration.scope);
  if(u.origin!==scope.origin||!u.pathname.startsWith(scope.pathname+'play/'))return;
+ if(u.pathname===scope.pathname+'play/judge-guide.js'){event.respondWith(fetch(new URL('judge-guide.js',scope).href,{cache:'no-store'}));return;}
  event.respondWith((async()=>{
   const cache=await caches.open(DEMO_CACHE);const hit=await cache.match(event.request,{ignoreSearch:true});
   if(hit)return hit;
